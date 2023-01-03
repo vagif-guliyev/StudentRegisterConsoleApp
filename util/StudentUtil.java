@@ -20,7 +20,7 @@ public class StudentUtil {
         }
         for(int i = 0; i< Config.students.length; i++) {
             Student st = Config.students[i];
-            System.out.println(st.getName() + " " + st.getSurname() + " " + st.getAge() + " " + st.getClassName());
+            System.out.println(st.getFullInfo());
         }
     }
 
@@ -34,5 +34,33 @@ public class StudentUtil {
         }
         System.out.println("Registration completed successfully!");
         StudentUtil.printAllRegisteredStudents();
+    }
+
+    public static void findStudentsAndPrint() {
+        String text = InputUtil.requireText("Enter student name, surname or classname");
+        Student[] foundStudents = findStudents(text);
+        for (Student foundStudent : foundStudents) {
+            System.out.println(foundStudent.getFullInfo());
+        }
+    }
+
+    public static Student[] findStudents(String text) {
+        int count = 0;
+        for(int i=0; i<Config.students.length; i++) {
+            Student st = Config.students[i];
+            if(st.getName().contains(text)||st.getSurname().contains(text)||st.getClassName().contains(text)) {
+                count++;
+            }
+        }
+
+        Student[] result = new Student[count];
+        int found = 0;
+        for(int i=0; i<Config.students.length; i++) {
+            Student st = Config.students[i];
+            if(st.getName().contains(text)||st.getSurname().contains(text)||st.getClassName().contains(text)) {
+                result[found++] = st;
+            }
+        }
+        return result;
     }
 }
